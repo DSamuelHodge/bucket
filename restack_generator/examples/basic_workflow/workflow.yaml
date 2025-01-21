@@ -1,0 +1,35 @@
+name: DataProcessor
+description: "A simple workflow that processes input data"
+
+input_schema:
+  data:
+    type: Dict[str, Any]
+    description: "Input data to process"
+    
+output_schema:
+  processed_data:
+    type: Dict[str, Any]
+    description: "Processed output data"
+  metadata:
+    type: Dict[str, str]
+    description: "Processing metadata"
+
+steps:
+  - name: validate
+    type: function
+    function: data_validation
+    
+  - name: transform
+    type: function
+    function: data_transformation
+    
+  - name: analyze
+    type: function
+    function: data_analysis
+
+retry_policy:
+  initial_interval: 1
+  maximum_interval: 100
+  maximum_attempts: 3
+
+timeout: "5m"
